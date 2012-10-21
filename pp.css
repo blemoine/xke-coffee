@@ -118,7 +118,7 @@ a, iframe, #impress {
     height: 768px;
     padding: 40px 60px;
     border-radius: 10px;
-    background-color: white;
+    background-color: #efefef;
     box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
     border: 1px solid rgba(0, 0, 0, .3);
     font-family: 'Open Sans', Arial, sans-serif;
@@ -127,9 +127,13 @@ a, iframe, #impress {
     font-size: 30px;
     line-height: 36px;
     letter-spacing: -1px;
+    text-shadow: white 1px 1px 0;
 }
 
 .section h1 {
+    color: black;
+    font-size: 1.3em;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -180,6 +184,10 @@ code {
     font-family: "Courier New", Courier, mono;
     margin: 0;
     padding: 1em 0 1em 2.8em;
+}
+
+.mainLi code {
+    padding: 0 0 0 0;
 }
 
 .petit {
