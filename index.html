@@ -11,34 +11,164 @@
 </head>
 <body>
 <div id="impress">
-    <div id="contexte" class="step slide section" data-x="0" data-y="0" data-z="0">
-        <h1>CoffeScrit</h1>
+    <div id="logo" class="step slide section" data-x="500" data-y="0" data-z="-1000">
+        <div class="header">
+            <span>1/7</span>
+        </div>
+        <br/>
+
+        <div class="logo-wrapper">
+            <img src="logo.png" class="logo-img"/>
+        </div>
+        <div class="footer">
+            <p>Jean-Laurent de Morlhon, Mathieu Breton et Benoit Lemoine, le 8 novembre 2012</p>
+        </div>
+    </div>
+
+    <div id="why" class="step slide section" data-x="0" data-y="1000">
+        <div class="header">
+            <span>2/7</span>
+        </div>
+        <br/>
+
+        <h1>Pourquoi coffeescript&nbsp;?</h1>
         <br/>
         <ul class="bulletPoint">
-            <li class="displayable mainLi" style="display:none">Client travaillant sous Excel</li>
-            <li class="displayable mainLi" style="display:none">Entière liberté technique</li>
-            <li class="displayable " style="display:none">Cible : Firefox et Chrome</li>
-            <li class="displayable mainLi" style="display:none">Stack choisie&nbsp;:
-                <div id="stack">
-                    <div class="floatRight stackComponent displayable" style="display:none" id="mysql">MySQL</div>
-                    <div class="floatRight stackComponent displayable" style="display:none" id="repository">JDBC
-                        Template
-                    </div>
-                    <div class="floatRight stackComponent displayable" style="display:none" id="resource">Jersey
-                        (REST)
-                    </div>
+            <li class="mainLi">Javascript est déjà partout</li>
+            <li class="mainLi">Mais Javascript est verbeux...</li>
+            <li class="mainLi">...et pas toujours consistant</li>
+        </ul>
+        <div class="exemple">
+            <pre><code>
+(function() {
+    if ([] == 0) {
+        console.log(":(");
+    }
+})();
+            </code></pre>
+        </div>
+    </div>
 
-                    <div class="floatRight stackComponent displayable" style="display:none" id="client">
-                        HTML5<br/>CSS3<br/>Javascript
-                    </div>
 
-                    <div style="clear: both">&nbsp;</div>
-                </div>
-            </li>
+
+
+    <div id="what" class="step slide section" data-x="1200" data-y="1000">
+        <div class="header">
+            <span>3/7</span>
+        </div>
+        <br/>
+
+        <h1>Coffeescript, qu'est ce donc&nbsp;?</h1>
+        <br/>
+        <ul class="bulletPoint">
+            <li class=" mainLi">Un langage avec une syntaxe inspiré de ruby et python (entre autre)</li>
+            <li class="mainLi">Corrigeant les problèmes majeures de javascript (verbosité et consistance)</li>
+            <li class="mainLi">Compilant en javascript ...</li>
+            <li class="mainLi">... avec une sortie propre et passant la validation JS Lint</li>
+        </ul>
+        <div class="exemple">
+            <div class="col col1">
+<pre><code>square = (x) -> x * x
+
+if [] != 0
+   console.log '\o/'
+            </code></pre>
+            </div>
+            <div class="col col2">
+<pre><code>var square;
+
+square = function(x) {
+    return x * x;
+};
+if ([] !== 0) {
+    console.log('\o/');
+}
+
+            </code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="how" class="step slide section" data-x="1200" data-y="2000">
+        <div class="header">
+            <span>4/7</span>
+        </div>
+        <br/>
+
+        <h1>Coffeescript, comment ca marche&nbsp;?</h1>
+        <br/>
+        <ul class="bulletPoint">
+            <li class="mainLi">Compilation avec l'utilitaire fourni par le package <i>coffee-script</i></li>
+            <li class="mainLi">Compilation "en continue" avec l'option <code>--watch</code></li>
+            <li class="mainLi">Utilisation de librairies tierces (Wro, jawr, etc.)</li>
+            <li class="mainLi">Compilation en direct dans le navigateur en incluant un script</li>
+            <li class="mainLi">En copiant/collant le code dans sur le <a href="http://coffeescript.org">site de coffee</a></li>
         </ul>
     </div>
 
-    <div id="overview" class="step" data-x="2000" data-y="3500" data-scale="9">
+    <div id="infos" class="step slide section" data-x="0" data-y="2000">
+        <div class="header">
+            <span>5/7</span>
+        </div>
+        <br/>
+
+        <h1>Quelques informations supplémentaires</h1>
+        <br>
+        <ul class="bulletPoint">
+            <li class="mainLi">Coffeescript utilise les API javascript</li>
+            <li class="mainLi">Coffeescript utilise l'indentation comme syntaxe</li>
+            <li class="mainLi">les fonctions se définissent avec <code>(param) -> corps</code></li>
+            <li class="mainLi">les attributs d'objets peuvent être récupérés avec <code>@</code></li>
+            <li class="mainLi">le mot clef <code>return</code> est optionnel</li>
+            <li class="mainLi">les <code>;</code> sont optionnels</li>
+            <li class="mainLi">les parenthèses sont (la plus part du temps) optionnels</li>
+        </ul>
+
+    </div>
+
+    <div id="exemple" class="step slide section" data-x="700" data-y="3000" data-z="0">
+        <div class="header">
+            <span>6/7</span>
+        </div>
+        <br/>
+
+        <h1>Un exemple simple</h1>
+        <br/>
+        <div class="exemple">
+            <pre><code>
+class Hero
+  constructor: (@secretIdentity) ->
+
+  humThemeSong: ->
+    if(@secretIdentity == "Bruce Wayne")
+      Array(16).join(@secretIdentity - 1)
+     else
+      "???"
+
+
+batman = new Hero "Bruce Wayne"
+console.log batman.humThemeSong()
+
+            </code></pre>
+         </div>
+    </div>
+
+    <div id="kata" class="step slide section" data-x="800" data-y="4000" data-z="1000">
+        <div class="header">
+            <span>6/7</span>
+        </div>
+        <br/>
+
+        <h1>Et maintenant kata&nbsp;!</h1>
+        <br/>
+
+        <div class="batman-wrapper">
+            <img src="Batman.png" />
+        </div>
+
+    </div>
+
+    <div id="overview" class="step" data-x="2000" data-y="2000" data-scale="9">
     </div>
 </div>
 </body>
