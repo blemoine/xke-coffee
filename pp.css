@@ -298,14 +298,12 @@ img {
 .logo-wrapper {
     top: 30%;
     position: relative;
-}
-
-.logo-img {
-    width: 72%;
+    height:30%
 }
 
 .batman-wrapper {
     position:relative;
+    height:80%
 }
 
 .footer {
