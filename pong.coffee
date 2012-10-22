@@ -78,6 +78,8 @@ class IngameState extends State
     @aliens = []
     @projectiles = []
     @ship = (new Ship(0, @height - Ship:: height) ) if(Ship?)
+    @imageProjectile = new Image()
+    @imageProjectile.src = 'projectile.png'
 
     @timePassed = 0
     SPAWN_INTERVAL = 40
@@ -142,10 +144,10 @@ class IngameState extends State
       context.drawImage(alien.image,alien.x, alien.y)
 
 
-    @projectiles.forEach (projectile) ->
-      context.fillStyle = 'red'
-      context.fillRect(projectile.x, projectile.y, projectile.width, projectile.height)
+    @projectiles.forEach (projectile) =>
+      context.drawImage(@imageProjectile, projectile.x, projectile.y)
 
+### on redige à partir d'ici ###
 
 class Ship
   constructor: (@x, @y) ->
@@ -173,7 +175,7 @@ class Ship
 class Projectile
   constructor: (@x, @y) ->
 
-  width: 2
+  width: 5
   height: 10
 
   move: -> @y -= 10
@@ -233,6 +235,8 @@ class Player
   formattedScore: -> if(@score == 0) then "#{@score} Point" else "#{@score} Points"
 
   increaseScore: (increase) -> @score += increase
+
+### fin de rédaction ###
 
 game.player = new Player(0) if (Player?)
 game.changeState(new StartState(game.width, game.height))
