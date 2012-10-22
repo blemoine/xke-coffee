@@ -68,8 +68,9 @@ class IngameState extends State
     keyBindings[KeyboardEvent.DOM_VK_RETURN] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
     keyBindings[KeyboardEvent.DOM_VK_SPACE] = =>
       if(@ship)
-        projectile = @ship.fire()
-        @projectiles.push projectile if(projectile)
+        if(@projectiles.length < 5)
+          projectile = @ship.fire()
+          @projectiles.push projectile if(projectile)
     super(@width, @height, keyBindings)
 
 
@@ -78,8 +79,7 @@ class IngameState extends State
     @aliens = []
     @projectiles = []
     @ship = (new Ship(0, @height - Ship:: height) ) if(Ship?)
-    @imageProjectile = new Image()
-    @imageProjectile.src = 'projectile.png'
+
 
     @timePassed = 0
     SPAWN_INTERVAL = 40
@@ -100,13 +100,13 @@ class IngameState extends State
               alien.decreaseLive()
               hasCollision = true
 
-          if !hasCollision
+          if !hasCollision && projectile.y > 0
             newProjectiles.push projectile
 
         newAliens = @aliens.filter (alien) => alien.isAlive()
         differenceInSize = @aliens.length > newAliens.length
         if(differenceInSize > 0)
-          @player.increaseScore(differenceInSize*10)
+          @player.increaseScore(differenceInSize * 10)
           @aliens = newAliens
 
 
@@ -120,7 +120,7 @@ class IngameState extends State
         @aliens.push new Alien(0, 0) if Alien?
 
       if @timePassed % MUTATE_INTERVAL == 0
-        @aliens = VeryBadAlien::mutates(@aliens) if VeryBadAlien?
+        @aliens = VeryBadAlien:: mutates(@aliens) if VeryBadAlien?
 
       if @timePassed > MOVE_INTERVAL * SPAWN_INTERVAL * MUTATE_INTERVAL
         @timePassed = 0
@@ -137,22 +137,23 @@ class IngameState extends State
       $('#score').html @player.formattedScore()
 
     if(@ship?)
-      context.fillStyle = "white"
-      context.fillRect(@ship.x, @ship.y, @ship.width, @ship.height)
+      context.drawImage(@ship.image, @ship.x, @ship.y)
 
     @aliens.forEach (alien) ->
-      context.drawImage(alien.image,alien.x, alien.y)
+      context.drawImage(alien.image, alien.x, alien.y)
 
 
     @projectiles.forEach (projectile) =>
-      context.drawImage(@imageProjectile, projectile.x, projectile.y)
+      context.drawImage(projectile.image, projectile.x, projectile.y)
 
 ### on redige à partir d'ici ###
 
 class Ship
   constructor: (@x, @y) ->
+    @image = new Image()
+    @image.src = 'ship.png'
 
-  height: 8
+  height: 30
   width: 40
 
   moveLeft: (minValue) ->
@@ -174,6 +175,8 @@ class Ship
 
 class Projectile
   constructor: (@x, @y) ->
+    @image = new Image()
+    @image.src = 'projectile.png'
 
   width: 5
   height: 10
