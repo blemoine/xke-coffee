@@ -60,6 +60,19 @@ class LoseState extends State
     context.font = "24pt Helvetica"
     context.fillText("You Lose ! Press start to restart", 100, 200)
 
+spriteImageBuilder = (url) ->
+  img = new Image()
+  img.src = url
+  img
+
+SPRITES =
+  ship: spriteImageBuilder('ship.png')
+  alien: spriteImageBuilder('normal-alien.png')
+  veryBadAlien: spriteImageBuilder('bad-alien.png')
+  projectile: spriteImageBuilder('projectile.png')
+  space: spriteImageBuilder('space2.png')
+
+
 class IngameState extends State
   constructor: (@width, @height, @player) ->
     keyBindings = {}
@@ -67,10 +80,9 @@ class IngameState extends State
     keyBindings[KeyboardEvent.DOM_VK_RIGHT] = => @ship.moveRight(@width) if @ship
     keyBindings[KeyboardEvent.DOM_VK_RETURN] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
     keyBindings[KeyboardEvent.DOM_VK_SPACE] = =>
-      if(@ship)
-        if(@projectiles.length < 5)
-          projectile = @ship.fire()
-          @projectiles.push projectile if(projectile)
+      if @ship && @projectiles.length < 5
+        projectile = @ship.fire()
+        @projectiles.push projectile if(projectile)
     super(@width, @height, keyBindings)
 
 
@@ -79,7 +91,6 @@ class IngameState extends State
     @aliens = []
     @projectiles = []
     @ship = (new Ship(0, @height - Ship:: height) ) if(Ship?)
-
 
     @timePassed = 0
     SPAWN_INTERVAL = 40
@@ -103,11 +114,13 @@ class IngameState extends State
           if !hasCollision && projectile.y > 0
             newProjectiles.push projectile
 
-        newAliens = @aliens.filter (alien) => alien.isAlive()
-        differenceInSize = @aliens.length > newAliens.length
-        if(differenceInSize > 0)
-          @player.increaseScore(differenceInSize * 10)
-          @aliens = newAliens
+        deadAliens = @aliens.filter (alien) => !alien.isAlive()
+        if(deadAliens.length > 0)
+          score = deadAliens.reduce(((acc, alien) ->
+            acc + alien.value
+          ), 0)
+          @player.increaseScore(score)
+          @aliens = @aliens.filter (alien) => alien.isAlive()
 
 
         @projectiles = newProjectiles
@@ -133,25 +146,29 @@ class IngameState extends State
   render: (context) ->
     super context
 
+    context.drawImage(SPRITES.space, 0, 0)
+
     if(@player?)
       $('#score').html @player.formattedScore()
 
     if(@ship?)
-      context.drawImage(@ship.image, @ship.x, @ship.y)
+      context.drawImage(SPRITES.ship, @ship.x, @ship.y)
 
     @aliens.forEach (alien) ->
-      context.drawImage(alien.image, alien.x, alien.y)
+      if(VeryBadAlien? && alien instanceof VeryBadAlien)
+        img = SPRITES.veryBadAlien
+      else
+        img = SPRITES.alien
+      context.drawImage(img, alien.x, alien.y)
 
 
     @projectiles.forEach (projectile) =>
-      context.drawImage(projectile.image, projectile.x, projectile.y)
+      context.drawImage(SPRITES.projectile, projectile.x, projectile.y)
 
 ### on redige à partir d'ici ###
 
 class Ship
   constructor: (@x, @y) ->
-    @image = new Image()
-    @image.src = 'ship.png'
 
   height: 30
   width: 40
@@ -169,14 +186,11 @@ class Ship
   fire: -> new Projectile(@x + @width / 2, @y - @height)
 
   destroyAliens: (aliens, number) ->
-    console.log(aliens[0..number])
     aliens[0..Math.max(number, aliens.length)].forEach (alien) -> alien.decreaseLive()
 
 
 class Projectile
   constructor: (@x, @y) ->
-    @image = new Image()
-    @image.src = 'projectile.png'
 
   width: 5
   height: 10
@@ -194,8 +208,7 @@ class Alien
   constructor: (@x, @y) ->
     @live = 1
     @sens = 1
-    @image = new Image()
-    @image.src = 'normal-alien.png'
+    @value = 10
 
   width: 30
   height: 30
@@ -223,8 +236,7 @@ class VeryBadAlien extends Alien
   constructor: (alien) ->
     super(alien.x, alien.y)
     @sens = alien.sens
-    @image = new Image()
-    @image.src = 'bad-alien.png'
+    @value = 25
     if(alien instanceof VeryBadAlien)
       @live = alien.live
     else
