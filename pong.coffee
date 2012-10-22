@@ -126,7 +126,7 @@ class IngameState extends State
         @projectiles = newProjectiles
 
         @aliens.forEach (alien) =>
-          alien.move(0, @width)
+          alien.move(0, @width, 9, 40)
           if alien.y + alien.height > @height
             game.changeState new LoseState(@width, @height)
       if @timePassed % SPAWN_INTERVAL == 0
@@ -134,6 +134,9 @@ class IngameState extends State
 
       if @timePassed % MUTATE_INTERVAL == 0
         @aliens = VeryBadAlien:: mutates(@aliens) if VeryBadAlien?
+
+      if(@ship.live < 0)
+        game.changeState new LoseState(@width, @height)
 
       if @timePassed > MOVE_INTERVAL * SPAWN_INTERVAL * MUTATE_INTERVAL
         @timePassed = 0
@@ -162,13 +165,14 @@ class IngameState extends State
       context.drawImage(img, alien.x, alien.y)
 
 
-    @projectiles.forEach (projectile) =>
+    @projectiles.forEach (projectile) ->
       context.drawImage(SPRITES.projectile, projectile.x, projectile.y)
 
 ### on redige à partir d'ici ###
 
 class Ship
   constructor: (@x, @y) ->
+    @live = 5
 
   height: 30
   width: 40
@@ -186,7 +190,9 @@ class Ship
   fire: -> new Projectile(@x + @width / 2, @y - @height)
 
   destroyAliens: (aliens, number) ->
-    aliens[0..Math.max(number, aliens.length)].forEach (alien) -> alien.decreaseLive()
+    aliens[0..Math.max(number, aliens.length)].forEach (alien) =>
+      @live -= 1
+      alien.decreaseLive()
 
 
 class Projectile
@@ -217,16 +223,18 @@ class Alien
 
   decreaseLive: ->  @live -= 1
 
-  move: (start, end) ->
-    newXValue = @x + @sens * 9
+  mutate: -> new VeryBadAlien(this)
+
+  move: (start, end, offsetX, offsetY) ->
+    newXValue = @x + @sens * offsetX
     newYValue = @y
     if newXValue > end - @width
       newXValue = end - @width
-      newYValue = @y + 40
+      newYValue = @y + offsetY
       @sens = -@sens
     if newXValue < start
       newXValue = start
-      newYValue = @y + 40
+      newYValue = @y + offsetY
       @sens = -@sens
     @x = newXValue
     @y = newYValue
@@ -237,12 +245,11 @@ class VeryBadAlien extends Alien
     super(alien.x, alien.y)
     @sens = alien.sens
     @value = 25
-    if(alien instanceof VeryBadAlien)
-      @live = alien.live
-    else
-      @live = 2
+    @live = 2
 
-  mutates: (aliens) -> (new VeryBadAlien(alien) for alien in aliens)
+  mutate: -> this
+
+  mutates: (aliens) -> (alien.mutate() for alien in aliens)
 
 class Player
   constructor: (@score) ->
@@ -252,6 +259,26 @@ class Player
   increaseScore: (increase) -> @score += increase
 
 ### fin de rédaction ###
+
+###
+Order :
+Player.increaseScore
+Player.formattedScore
+Ship.moveLeft
+Ship.moveRight
+Alien.isAlive
+Alien.decreaseLive
+Alien.move
+VeryBadAlien.mutate
+Alien.mutate
+VeryBadAlien.mutates
+Ship.destroyAliens
+Projectile.move
+Projectile.hasCollisionWith
+Ship.fire
+
+###
+
 
 game.player = new Player(0) if (Player?)
 game.changeState(new StartState(game.width, game.height))
