@@ -218,6 +218,8 @@ class VeryBadAlien extends Alien
   constructor: (alien) ->
     super(alien.x, alien.y)
     @sens = alien.sens
+    @image = new Image()
+    @image.src = 'bad-alien.png'
     if(alien instanceof VeryBadAlien)
       @live = alien.live
     else
