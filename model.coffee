@@ -1,47 +1,33 @@
-###
+class Player
+  constructor: (@score) ->
+
+  increaseScore: (offset) -> @score += offset
+
+  formattedScore: -> if(@score > 1) then "#{@score} Points" else "#{@score} Point"
+
 class Ship
   constructor: (@x, @y) ->
-    @live = 5
+     @live = 5
 
-  height: 30
   width: 40
+  height: 30
 
-  moveLeft: (minValue) ->
-    newXValue = @x - 10
-    newXValue = minValue if newXValue < minValue
-    @x = newXValue
+  moveLeft: (min) ->
+    newValue = @x - 10
+    @x = if(newValue < min) then min else newValue
+
+  moveRight: (max) ->
+    newValue = @x + 10
+    maxValue = max - @width
+    @x = if(newValue > maxValue) then maxValue else newValue
 
   isAlive: -> @live > 0
 
-  moveRight: (maxValue) ->
-    newXValue = @x + 10
-    newXValue = (maxValue - @width) if newXValue > maxValue - @width
-    @x = newXValue
-
-  fire: -> new Projectile(@x + @width / 2, @y - @height)
+  fire: -> new Projectile(@x + @width / 2, @y )
 
   destroyAliens: (aliens, number) ->
-    @live -= 1
-    max = if(number > aliens.length) then aliens.length else number
-
-    aliens[0..max-1].forEach (alien) =>
-      alien.decreaseLive()
-
-
-class Projectile
-  constructor: (@x, @y) ->
-
-  width: 5
-  height: 10
-
-  move: -> @y -= 10
-
-  hasCollisionWith: (alien) ->
-    !( alien.x + alien.width < @x ||
-    alien.x > @x + @width ||
-    alien.y + alien.height < @y ||
-    alien.y > @y + @height)
-
+     @live = @live - 1
+     aliens[0..number - 1].forEach (alien) -> alien.decreaseLive()
 
 class Alien
   constructor: (@x, @y) ->
@@ -54,43 +40,45 @@ class Alien
 
   isAlive: -> @live > 0
 
-  decreaseLive: ->  @live -= 1
+  move: (min, max) ->
+    newXValue = @x + @sens * 10
+    maxXValue = max - @width
+    isXMoreThanMax = newXValue > maxXValue
+    isXLessThanMin = newXValue < min
+    @x = if(isXMoreThanMax || isXLessThanMin) then (if (isXMoreThanMax) then maxXValue else min) else newXValue
+    @y = if(isXMoreThanMax || isXLessThanMin) then @y + 40 else @y
+    @sens = if(isXMoreThanMax || isXLessThanMin) then -@sens else @sens
+
+  decreaseLive: -> @live = @live - 1
 
   mutate: -> new VeryBadAlien(this)
 
-  move: (start, end, offsetX, offsetY) ->
-    newXValue = @x + @sens * offsetX
-    newYValue = @y
-    if newXValue > end - @width
-      newXValue = end - @width
-      newYValue = @y + offsetY
-      @sens = -@sens
-    if newXValue < start
-      newXValue = start
-      newYValue = @y + offsetY
-      @sens = -@sens
-    @x = newXValue
-    @y = newYValue
-
-
 class VeryBadAlien extends Alien
   constructor: (alien) ->
-    super(alien.x, alien.y)
+    @x = alien.x
+    @y = alien.y
     @sens = alien.sens
-    @value = 25
     @live = 2
+    @value = 25
 
   mutate: -> this
 
   mutates: (aliens) -> (alien.mutate() for alien in aliens)
 
-class Player
-  constructor: (@score) ->
+class Projectile
+  constructor: (@x, @y) ->
 
-  formattedScore: -> if(@score < 2) then "#{@score} Point" else "#{@score} Points"
+  height:10
+  width:5
 
-  increaseScore: (increase) -> @score += increase
-###
+  move: -> @y = @y - 10
+
+  hasCollisionWith: (alien) ->
+    !(alien.x + alien.width < @x ||
+      alien.x > @x + @width ||
+      alien.y + alien.height < @y ||
+      alien.y > @y + @height
+    )
 
 @Ship = Ship if Ship?
 @Alien = Alien if Alien?

@@ -126,7 +126,7 @@ class IngameState extends State
         @projectiles = newProjectiles
 
         @aliens.forEach (alien) =>
-          alien.move(0, @width, 9, 40)
+          alien.move(0, @width)
           if alien.y + alien.height > @height
             game.changeState new LoseState(@width, @height)
       if @timePassed % SPAWN_INTERVAL == 0
@@ -135,7 +135,7 @@ class IngameState extends State
       if @timePassed % MUTATE_INTERVAL == 0
         @aliens = VeryBadAlien:: mutates(@aliens) if VeryBadAlien?
 
-      if @ship? && !@ship.isAlive()
+      if @ship? && @ship.isAlive? && !@ship.isAlive()
         game.changeState new LoseState(@width, @height)
 
       if @timePassed > MOVE_INTERVAL * SPAWN_INTERVAL * MUTATE_INTERVAL
