@@ -7,7 +7,7 @@ class Player
 
 class Ship
   constructor: (@x, @y) ->
-     @live = 5
+    @live = 5
 
   width: 40
   height: 30
@@ -23,11 +23,11 @@ class Ship
 
   isAlive: -> @live > 0
 
-  fire: -> new Projectile(@x + @width / 2, @y )
+  fire: -> new Projectile(@x + @width / 2, @y)
 
   destroyAliens: (aliens, number) ->
-     @live = @live - 1
-     aliens[0..number - 1].forEach (alien) -> alien.decreaseLive()
+    @live = @live - 1
+    aliens[0..number - 1].forEach (alien) -> alien.decreaseLive()
 
 class Alien
   constructor: (@x, @y) ->
@@ -45,9 +45,10 @@ class Alien
     maxXValue = max - @width
     isXMoreThanMax = newXValue > maxXValue
     isXLessThanMin = newXValue < min
-    @x = if(isXMoreThanMax || isXLessThanMin) then (if (isXMoreThanMax) then maxXValue else min) else newXValue
-    @y = if(isXMoreThanMax || isXLessThanMin) then @y + 40 else @y
-    @sens = if(isXMoreThanMax || isXLessThanMin) then -@sens else @sens
+    isXOutsideRange = isXMoreThanMax || isXLessThanMin
+    @x = if(isXOutsideRange) then (if (isXMoreThanMax) then maxXValue else min) else newXValue
+    @y = if(isXOutsideRange) then @y + 40 else @y
+    @sens = if(isXOutsideRange) then -@sens else @sens
 
   decreaseLive: -> @live = @live - 1
 
@@ -68,16 +69,16 @@ class VeryBadAlien extends Alien
 class Projectile
   constructor: (@x, @y) ->
 
-  height:10
-  width:5
+  height: 10
+  width: 5
 
   move: -> @y = @y - 10
 
   hasCollisionWith: (alien) ->
     !(alien.x + alien.width < @x ||
-      alien.x > @x + @width ||
-      alien.y + alien.height < @y ||
-      alien.y > @y + @height
+    alien.x > @x + @width ||
+    alien.y + alien.height < @y ||
+    alien.y > @y + @height
     )
 
 @Ship = Ship if Ship?
