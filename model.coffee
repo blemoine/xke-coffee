@@ -1,4 +1,4 @@
-###
+
 class Ship
   constructor: (@x, @y) ->
     @live = 5
@@ -83,10 +83,10 @@ class VeryBadAlien extends Alien
 class Player
   constructor: (@score) ->
 
-  formattedScore: -> if(@score == 0) then "#{@score} Point" else "#{@score} Points"
+  formattedScore: -> if(@score < 2) then "#{@score} Point" else "#{@score} Points"
 
   increaseScore: (increase) -> @score += increase
-###
+
 
 ###
 Order :
@@ -104,8 +104,9 @@ Ship.destroyAliens
 Projectile.move
 Projectile.hasCollisionWith
 Ship.fire
-
 ###
+
+
 
 @Ship = Ship if Ship?
 @Alien = Alien if Alien?
