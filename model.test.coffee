@@ -169,3 +169,71 @@ test 'The VeryBadAlien class has a method to mutates a list of alien', ->
   equal mutatedAliens[1], veryBadAlien
   equal mutatedAliens[2].x, 23
   equal mutatedAliens[2].y, 34
+
+module 'class Ship.destroyAliens'
+test 'The class Ship must have a method destroyAliens which decrease lives of aliens', ->
+  ship = new Ship(10, 20)
+  aliens = [new Alien(1,1), new VeryBadAlien(new Alien(1,2)), new Alien(1,3)]
+  ship.destroyAliens(aliens, 2)
+  equal aliens[0].live, 0
+  equal aliens[1].live, 1
+  equal aliens[2].live, 1
+
+test 'The class Ship must have a method destroyAliens which decrease lives of aliens', ->
+  ship = new Ship(10, 20)
+  aliens = [new Alien(1,1), new VeryBadAlien(new Alien(1,2)), new Alien(1,3)]
+  ship.destroyAliens(aliens, 5)
+  equal aliens[0].live, 0
+  equal aliens[1].live, 1
+  equal aliens[2].live, 0
+
+test 'The class Ship must have a method isAlive which is true by default', ->
+  ship = new Ship(10, 20)
+  ok ship.isAlive()
+
+test "The class Ship must have a method destroyAliens which can't be used more than 5 times", ->
+  ship = new Ship(10,20)
+  aliens = []
+  ship.destroyAliens(aliens, 5)
+  ship.destroyAliens(aliens, 5)
+  ship.destroyAliens(aliens, 5)
+  ship.destroyAliens(aliens, 5)
+  ok ship.isAlive()
+  ship.destroyAliens(aliens, 5)
+  ok !ship.isAlive()
+
+
+module 'Projectile'
+test 'There is a class projectile with 2 attributes x and y in the constructor', ->
+  projectile = new Projectile(22,33)
+  equal projectile.x, 22
+  equal projectile.y, 33
+
+test 'There must be a method hasCollisionWith in the class projectile, colliding at left', ->
+  projectile = new Projectile(100, 100)
+  ok !projectile.hasCollisionWith new Alien(69,10)
+  ok !projectile.hasCollisionWith new Alien(71,10)
+  ok !projectile.hasCollisionWith new Alien(69,100)
+  ok projectile.hasCollisionWith new Alien(71,100)
+
+test 'There must be a method hasCollisionWith in the class projectile, colliding at right', ->
+  projectile = new Projectile(100, 100)
+  ok !projectile.hasCollisionWith new Alien(106,10)
+  ok !projectile.hasCollisionWith new Alien(104,10)
+  ok !projectile.hasCollisionWith new Alien(106,100)
+  ok projectile.hasCollisionWith new Alien(104,100)
+
+test 'There must be a method hasCollisionWith in the class projectile, colliding at top', ->
+  projectile = new Projectile(100, 100)
+  ok !projectile.hasCollisionWith new Alien(2,69)
+  ok !projectile.hasCollisionWith new Alien(2,71)
+  ok !projectile.hasCollisionWith new Alien(100,69)
+  ok projectile.hasCollisionWith new Alien(100,71)
+
+test 'There must be a method hasCollisionWith in the class projectile, colliding at bottom', ->
+  projectile = new Projectile(100, 100)
+  ok !projectile.hasCollisionWith new Alien(2,111)
+  ok !projectile.hasCollisionWith new Alien(2,109)
+  ok !projectile.hasCollisionWith new Alien(100,111)
+  ok projectile.hasCollisionWith new Alien(100,109)
+

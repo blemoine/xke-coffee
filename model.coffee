@@ -1,4 +1,4 @@
-
+###
 class Ship
   constructor: (@x, @y) ->
     @live = 5
@@ -11,6 +11,8 @@ class Ship
     newXValue = minValue if newXValue < minValue
     @x = newXValue
 
+  isAlive: -> @live > 0
+
   moveRight: (maxValue) ->
     newXValue = @x + 10
     newXValue = (maxValue - @width) if newXValue > maxValue - @width
@@ -19,8 +21,10 @@ class Ship
   fire: -> new Projectile(@x + @width / 2, @y - @height)
 
   destroyAliens: (aliens, number) ->
-    aliens[0..Math.max(number, aliens.length)].forEach (alien) =>
-      @live -= 1
+    @live -= 1
+    max = if(number > aliens.length) then aliens.length else number
+
+    aliens[0..max-1].forEach (alien) =>
       alien.decreaseLive()
 
 
@@ -86,27 +90,7 @@ class Player
   formattedScore: -> if(@score < 2) then "#{@score} Point" else "#{@score} Points"
 
   increaseScore: (increase) -> @score += increase
-
-
 ###
-Order :
-Player.increaseScore
-Player.formattedScore
-Ship.moveLeft
-Ship.moveRight
-Alien.isAlive
-Alien.decreaseLive
-Alien.move
-VeryBadAlien.mutate
-Alien.mutate
-VeryBadAlien.mutates
-Ship.destroyAliens
-Projectile.move
-Projectile.hasCollisionWith
-Ship.fire
-###
-
-
 
 @Ship = Ship if Ship?
 @Alien = Alien if Alien?

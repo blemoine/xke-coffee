@@ -135,7 +135,7 @@ class IngameState extends State
       if @timePassed % MUTATE_INTERVAL == 0
         @aliens = VeryBadAlien:: mutates(@aliens) if VeryBadAlien?
 
-      if @ship?.live < 0
+      if @ship? && !@ship.isAlive()
         game.changeState new LoseState(@width, @height)
 
       if @timePassed > MOVE_INTERVAL * SPAWN_INTERVAL * MUTATE_INTERVAL
