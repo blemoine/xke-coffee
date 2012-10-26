@@ -1,6 +1,26 @@
 h1. Coffee-script Hand's on
 
-h2. Récupération du projet
+h2. Initialiser le projet
+
+* Clonez le projet github "https://github.com/blemoine/xke-coffee":https://github.com/blemoine/xke-coffee
+* Ouvrez dans un navigateur le fichier spaceinvaders.test.html
+* Faites passer les tests Qunit au vert !
+* ressources utiles :
+** le site de coffee-script "http://coffeescript.org/":http://coffeescript.org/
+** le mozilla developper network "https://developer.mozilla.org/":https://developer.mozilla.org/fr/
+
+
+h2. Contexte
+
+Les extra-terrestres sont là, et vous êtes seul à pouvoir créer une arme permettant de les détruire !
+Vous pouvez ouvrir le fichier spaceinvaders.html ; mais vous constaterez que en l'état, vous ne pouvez pas faire grand chose !
+
+
+h3. Le joueur
+
+La première étape va consister à créer la classe Player. Les tests unitaires vous guideront dans sa création, la seule
+consigne particulière étant d'implémenter la méthode formattedScore avec de l'interpolation "http://coffeescript.org/#strings":http://coffeescript.org/#strings
+
 
 
 
