@@ -3,8 +3,10 @@ h1. Coffee-script Hand's on
 h2. Initialiser le projet
 
 * Clonez le projet github "https://github.com/blemoine/xke-coffee":https://github.com/blemoine/xke-coffee
-* Ouvrez dans un navigateur le fichier spaceinvaders.test.html
-* Faites passer les tests Qunit au vert !
+* Ouvrez dans un navigateur récent le fichier spaceinvaders.test.html pour voir les test unitaires s'executer
+* Ouvrez dans un navigateur récent le fichier spaceinvaders.html pour voir la réalité de votre implémentation !
+* Regarder le fichier model.test.coffee pour voir quelles sont les attentes
+* Editer le fichier model.coffee pour donner vie à votre programme
 * ressources utiles :
 ** le site de coffee-script "http://coffeescript.org/":http://coffeescript.org/
 ** le mozilla developper network "https://developer.mozilla.org/":https://developer.mozilla.org/fr/
@@ -44,7 +46,7 @@ Mais, vous le sentez, les aliens ne sont pas ce qu'ils semblent, et ils ont une 
 
 Implémentez la classe VeryBadAlien en suivant les tests unitaires. Essayez d'implémenter la méthode @mutates@ avec un for compréhension "http://coffeescript.org/#loops":http://coffeescript.org/#loops
 
-Retournez voir spaceinvaders.html ; et attendez quelques secondes et oui les Aliens sont capables de muter !
+Retournez voir spaceinvaders.html ; et attendez quelques secondes les Aliens muteront !
 
 
 h3. Les armes : la bombe !
@@ -53,7 +55,7 @@ Il est temps de lutter efficacement contre les aliens, et de développer des arm
 
 Implémentez les tests unitaires correspondant à la méthode @destroyAliens@ en essayant de le faire avec des ranges "http://coffeescript.org/#slices":http://coffeescript.org/#slices
 
-Malheureusement la bombe implémentée, déclenchable en appuaynt sur Return, finit par détruire votre vaisseau après quelques utilisations.
+Malheureusement la bombe implémentée, déclenchable en appuyant sur Return, fini par détruire votre vaisseau après quelques utilisations.
 
 
 h3. Les armes : le canon laser
@@ -62,7 +64,7 @@ Il va donc falloir créer une arme utilisable sur le plus long terme, meme si un
 
 Implémentez les tests unitaires de la classe @Projectile@.
 
-Testez finalement spaceinvaders.html. Vous voilà à même de lutter efficacement.
+Testez finalement spaceinvaders.html. Vous voilà à même de lutter efficacement en tirant des lasers avec la touche espace.
 
 
 h2. Remerciements spéciaux
