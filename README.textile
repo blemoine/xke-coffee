@@ -5,8 +5,8 @@ h2. Initialiser le projet
 * Clonez le projet github "https://github.com/blemoine/xke-coffee":https://github.com/blemoine/xke-coffee
 * Ouvrez dans un navigateur récent le fichier spaceinvaders.test.html pour voir les test unitaires s'executer
 * Ouvrez dans un navigateur récent le fichier spaceinvaders.html pour voir la réalité de votre implémentation !
-* Regarder le fichier model.test.coffee pour voir quelles sont les attentes
-* Editer le fichier model.coffee pour donner vie à votre programme
+* Regardez le fichier model.test.coffee pour voir quelles sont les attentes
+* Editez le fichier model.coffee pour donner vie à votre programme
 * ressources utiles :
 ** le site de coffee-script "http://coffeescript.org/":http://coffeescript.org/
 ** le mozilla developper network "https://developer.mozilla.org/":https://developer.mozilla.org/fr/
@@ -15,7 +15,7 @@ h2. Initialiser le projet
 h2. Contexte
 
 Les extra-terrestres sont là, et vous êtes seul à pouvoir créer une arme permettant de les détruire !
-Vous pouvez ouvrir le fichier spaceinvaders.html ; mais vous constaterez que en l'état, vous ne pouvez pas faire grand chose !
+Vous pouvez ouvrir le fichier spaceinvaders.html ; mais vous constaterez qu'en l'état, vous ne pouvez pas faire grand chose d'autre qu'admirer le vide de l'espace !
 
 
 h3. Le joueur
@@ -29,22 +29,22 @@ Il est temps maintenant de créer un vaisseau de façon à lutter efficacement c
 
 Pour cela, il faudra créer la classe @Ship@ en se laissant guider par les tests unitaires.
 
-Une fois réalisé, vous pouvez retourner sur la page spaceinvaders.html, afin de tester en direct que votre vaisseau est manoeuvrable.
+Une fois réalisée, vous pouvez retourner sur la page spaceinvaders.html, afin de tester en direct que votre vaisseau est manoeuvrable.
 
 
 h3. Alien !
 
-Malheureusement les aliens sont invisibles, mais vous SAVEZ qu'ils sont la. Et vous allez le prouver !
+Malheureusement les aliens sont invisibles, mais vous SAVEZ qu'ils sont là. Et vous allez le prouver !
 
-Implémentez la classe Alien en suivant les tests unitaires.
+Implémentez la classe @Alien@ en suivant les tests unitaires.
 
-Une fois réalisé, vous pouvez retourner sur la page spaceinvaders.html, et constater que vous aviez raison, ils sont la !
+Une fois réalisée, vous pouvez retourner sur la page spaceinvaders.html, et constater que vous aviez raison, ils sont là !
 
 h3. Very Bad Alien
 
 Mais, vous le sentez, les aliens ne sont pas ce qu'ils semblent, et ils ont une autre forme.
 
-Implémentez la classe VeryBadAlien en suivant les tests unitaires. Essayez d'implémenter la méthode @mutates@ avec un for compréhension "http://coffeescript.org/#loops":http://coffeescript.org/#loops
+Implémentez la classe @VeryBadAlien@ en suivant les tests unitaires. Essayez d'implémenter la méthode @mutates@ avec un for compréhension "http://coffeescript.org/#loops":http://coffeescript.org/#loops
 
 Retournez voir spaceinvaders.html ; et attendez quelques secondes les Aliens muteront !
 
@@ -55,16 +55,17 @@ Il est temps de lutter efficacement contre les aliens, et de développer des arm
 
 Implémentez les tests unitaires correspondant à la méthode @destroyAliens@ en essayant de le faire avec des ranges "http://coffeescript.org/#slices":http://coffeescript.org/#slices
 
-Malheureusement la bombe implémentée, déclenchable en appuyant sur Return, fini par détruire votre vaisseau après quelques utilisations.
+Malheureusement, la bombe implémentée, déclenchable en appuyant sur Return, fini par détruire votre vaisseau après quelques utilisations.
 
 
 h3. Les armes : le canon laser
 
-Il va donc falloir créer une arme utilisable sur le plus long terme, meme si un peu moins puissantes.
+Il va donc falloir créer une arme utilisable sur le plus long terme, même si un peu moins puissante.
 
-Implémentez les tests unitaires de la classe @Projectile@.
+Implémentez la classe @Projectile@ en suivant les tests unitaires.
 
 Testez finalement spaceinvaders.html. Vous voilà à même de lutter efficacement en tirant des lasers avec la touche espace.
+
 
 
 h2. Remerciements spéciaux
