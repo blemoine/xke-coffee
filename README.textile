@@ -1,15 +1,15 @@
-h1. Coffee-script Hand's on
+h1. Coffee-script Hands on
 
 h2. Initialiser le projet
 
 * Clonez le projet github "https://github.com/blemoine/xke-coffee":https://github.com/blemoine/xke-coffee
-* Ouvrez dans un navigateur récent le fichier spaceinvaders.test.html pour voir les test unitaires s'executer
+* Ouvrez dans un navigateur récent le fichier spaceinvaders.test.html pour voir les test unitaires s'exécuter.
 * Ouvrez dans un navigateur récent le fichier spaceinvaders.html pour voir la réalité de votre implémentation !
-* Regardez le fichier model.test.coffee pour voir quelles sont les attentes
-* Editez le fichier model.coffee pour donner vie à votre programme
-* ressources utiles :
-** le site de coffee-script "http://coffeescript.org/":http://coffeescript.org/
-** le mozilla developper network "https://developer.mozilla.org/":https://developer.mozilla.org/fr/
+* Regardez le fichier model.test.coffee pour voir quelles sont les attentes.
+* Editez le fichier model.coffee pour donner vie à votre programme.
+* Ressources utiles :
+** Le site de Coffee-script "http://coffeescript.org/":http://coffeescript.org/
+** Le Mozilla developper network "https://developer.mozilla.org/":https://developer.mozilla.org/fr/
 
 
 h2. Contexte
@@ -29,7 +29,7 @@ Il est temps maintenant de créer un vaisseau de façon à lutter efficacement c
 
 Pour cela, il faudra créer la classe @Ship@ en se laissant guider par les tests unitaires.
 
-Une fois réalisée, vous pouvez retourner sur la page spaceinvaders.html, afin de tester en direct que votre vaisseau est manoeuvrable.
+Une fois réalisé, vous pouvez retourner sur la page spaceinvaders.html, afin de tester en direct que votre vaisseau est manoeuvrable.
 
 
 h3. Alien !
@@ -38,7 +38,8 @@ Malheureusement les aliens sont invisibles, mais vous SAVEZ qu'ils sont là. Et 
 
 Implémentez la classe @Alien@ en suivant les tests unitaires.
 
-Une fois réalisée, vous pouvez retourner sur la page spaceinvaders.html, et constater que vous aviez raison, ils sont là !
+Une fois réalisé, vous pouvez retourner sur la page spaceinvaders.html, et constater que vous aviez raison, ils sont là !
+
 
 h3. Very Bad Alien
 
@@ -46,7 +47,7 @@ Mais, vous le sentez, les aliens ne sont pas ce qu'ils semblent, et ils ont une 
 
 Implémentez la classe @VeryBadAlien@ en suivant les tests unitaires. Essayez d'implémenter la méthode @mutates@ avec un for compréhension "http://coffeescript.org/#loops":http://coffeescript.org/#loops
 
-Retournez voir spaceinvaders.html ; et attendez quelques secondes les Aliens muteront !
+Retournez voir spaceinvaders.html ; et attendez quelques secondes, les aliens muteront !
 
 
 h3. Les armes : la bombe !
@@ -70,7 +71,7 @@ Testez finalement spaceinvaders.html. Vous voilà à même de lutter efficacemen
 
 h2. Remerciements spéciaux
 
-Je remercie camille@http://finandsys.com/ pour la réalisation des sprites permettant d'afficher de magnifiques images plutôt que des rectangles verts fluos.
+Je remercie camille@finandsys.com pour la réalisation des sprites permettant d'afficher de magnifiques images plutôt que des rectangles verts fluos.
 
 
 
