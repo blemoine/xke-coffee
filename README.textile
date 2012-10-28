@@ -3,8 +3,8 @@ h1. Coffee-script Hands on
 h2. Initialiser le projet
 
 * Clonez le projet github "https://github.com/blemoine/xke-coffee":https://github.com/blemoine/xke-coffee
-* Ouvrez dans un navigateur récent le fichier spaceinvaders.test.html pour voir les test unitaires s'exécuter.
-* Ouvrez dans un navigateur récent le fichier spaceinvaders.html pour voir la réalité de votre implémentation !
+* Ouvrez dans un navigateur récent (sauf chrome) le fichier spaceinvaders.test.html pour voir les test unitaires s'exécuter.
+* Ouvrez dans un navigateur récent (sauf chrome) le fichier spaceinvaders.html pour voir la réalité de votre implémentation !
 * Regardez le fichier model.test.coffee pour voir quelles sont les attentes.
 * Editez le fichier model.coffee pour donner vie à votre programme.
 * Ressources utiles :
