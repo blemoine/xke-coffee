@@ -1,4 +1,6 @@
+### Créez vos classes ci-dessous ###
 
+### Créez vos classes ci-dessus ###
 
 @Ship = Ship if Ship?
 @Alien = Alien if Alien?
