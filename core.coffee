@@ -37,7 +37,7 @@ class State
 class @StartState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[KeyboardEvent.DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[32] = -> game.changeState new IngameState(game.width, game.height, game.player)
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -50,7 +50,7 @@ class @StartState extends State
 class LoseState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[KeyboardEvent.DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[32] = -> game.changeState new IngameState(game.width, game.height, game.player)
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -76,10 +76,10 @@ SPRITES =
 class IngameState extends State
   constructor: (@width, @height, @player) ->
     keyBindings = {}
-    keyBindings[KeyboardEvent.DOM_VK_LEFT] = => @ship.moveLeft(0) if @ship
-    keyBindings[KeyboardEvent.DOM_VK_RIGHT] = => @ship.moveRight(@width) if @ship
-    keyBindings[KeyboardEvent.DOM_VK_RETURN] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
-    keyBindings[KeyboardEvent.DOM_VK_SPACE] = =>
+    keyBindings[37] = => @ship.moveLeft(0) if @ship
+    keyBindings[39] = => @ship.moveRight(@width) if @ship
+    keyBindings[13] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
+    keyBindings[32] = =>
       if @ship && @projectiles.length < 5
         projectile = @ship.fire()
         @projectiles.push projectile if(projectile)
