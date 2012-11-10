@@ -1,3 +1,8 @@
+DOM_VK_LEFT = 37
+DOM_VK_RIGHT = 39
+DOM_VK_SPACE = 32
+DOM_VK_RETURN = 13
+
 class Game
   constructor: (@id, @width, @height) ->
     @state = null
@@ -37,7 +42,7 @@ class State
 class @StartState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[32] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -50,7 +55,7 @@ class @StartState extends State
 class LoseState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[32] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -76,10 +81,20 @@ SPRITES =
 class IngameState extends State
   constructor: (@width, @height, @player) ->
     keyBindings = {}
-    keyBindings[37] = => @ship.moveLeft(0) if @ship
-    keyBindings[39] = => @ship.moveRight(@width) if @ship
-    keyBindings[13] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
-    keyBindings[32] = =>
+    keyBindings[DOM_VK_LEFT] = =>
+      if(@ship)
+        @ship.moveLeft()
+        newX = @ship.x
+        @ship.x = if(newX < 0) then 0 else newX
+    keyBindings[DOM_VK_RIGHT] = =>
+      if(@ship)
+        @ship.moveRight()
+        newX = @ship.x
+        maxValue = @width - @ship.width
+        @ship.x = if(newX > maxValue) then maxValue else newX
+
+    keyBindings[DOM_VK_RETURN] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
+    keyBindings[DOM_VK_SPACE] = =>
       if @ship && @projectiles.length < 5
         projectile = @ship.fire()
         @projectiles.push projectile if(projectile)
@@ -126,7 +141,19 @@ class IngameState extends State
         @projectiles = newProjectiles
 
         @aliens.forEach (alien) =>
-          alien.move(0, @width)
+          sens = if (alien.y / 40) % 2 == 0 then 'right' else 'left'
+          alien.move(sens)
+          newXValue = alien.x
+          maxXValue = @width - alien.width
+          isXMoreThanMax = newXValue > maxXValue
+          isXLessThanMin = newXValue < 0
+
+          if isXMoreThanMax || isXLessThanMin
+            alien.move('down')
+            alien.x = if (isXMoreThanMax) then maxXValue else 0
+
+
+
           if alien.y + alien.height > @height
             game.changeState new LoseState(@width, @height)
       if @timePassed % SPAWN_INTERVAL == 0
