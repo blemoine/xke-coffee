@@ -129,20 +129,20 @@ class IngameState extends State
           if !hasCollision && projectile.y > 0
             newProjectiles.push projectile
 
-        deadAliens = @aliens.filter (alien) => !alien.isAlive()
+        deadAliens = @aliens.filter (alien) => alien.isAlive? && !alien.isAlive()
         if(deadAliens.length > 0)
           score = deadAliens.reduce(((acc, alien) ->
             acc + alien.value
           ), 0)
           @player.increaseScore(score)
-          @aliens = @aliens.filter (alien) => alien.isAlive()
+          @aliens = @aliens.filter (alien) => alien.isAlive? && alien.isAlive()
 
 
         @projectiles = newProjectiles
 
         @aliens.forEach (alien) =>
           sens = if (alien.y / 40) % 2 == 0 then 'right' else 'left'
-          alien.move(sens)
+          if alien.move? then alien.move(sens)
           newXValue = alien.x
           maxXValue = @width - alien.width
           isXMoreThanMax = newXValue > maxXValue

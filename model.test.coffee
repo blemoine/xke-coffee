@@ -28,8 +28,8 @@ test "There is a class Ship with 2 attributes x and y in the constructor, repres
   equal ship.y, 34
 
 test 'There is a class Ship, with 2 properties width and height', ->
-  equal Ship:: width, 40
-  equal Ship:: height, 30
+  equal Ship:: width, 40, "Width must be 40"
+  equal Ship:: height, 30, "Height must be 30"
 
 test 'The method moveLeft of class Ship substract 10 to the x position of the ship', ->
   ship = new Ship(15, 23)
@@ -82,7 +82,7 @@ test "The method move of class Alien doesn't do anything if parameter isn't vali
   equal alien.x, 20
   equal alien.y, 20
 
-test 'The method move of class Alien add forty to x if the parameter value is down', ->
+test 'The method move of class Alien add forty to y if the parameter value is down', ->
   alien = new Alien(20, 20)
   alien.move('down')
   equal alien.x, 20
@@ -157,7 +157,7 @@ test 'The class Ship must have a method isAlive which is true by default', ->
   ship = new Ship(10, 20)
   ok ship.isAlive()
 
-test "The class Ship must have a method destroyAliens which can't be used more than 5 times", ->
+test "The class Ship must have a method destroyAliens which destroy the ship if used more than 5 times", ->
   ship = new Ship(10, 20)
   aliens = []
   ship.destroyAliens(aliens, 5)
@@ -178,7 +178,7 @@ test 'There is a class Projectile, with 2 properties height and width', ->
   equal Projectile:: width, 5
   equal Projectile:: height, 10
 
-test 'The class Ship has a method fire which create a new Projectile, and the coordinate of the projectile', ->
+test 'The class Ship has a method fire which create a new Projectile, and the coordinates of the projectile are centered on the ship', ->
   ship = new Ship(10, 80)
   projectile = ship.fire()
   ok projectile instanceof Projectile
