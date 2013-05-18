@@ -35,8 +35,8 @@ test "There is a class Ship with 2 attributes x and y in the constructor, repres
   equal ship?.y, 34, "ship.y must return 34"
 
 test 'There is a class Ship, with 2 properties width and height', ->
-  equal Ship?::width, 40, "Ship::Width must be 40"
-  equal Ship?::height, 30, "Ship::Height must be 30"
+  equal Ship?::width, 40, "Ship::width must be 40"
+  equal Ship?::height, 30, "Ship::height must be 30"
 
 test 'The method moveLeft of class Ship substract 10 to the x position of the ship', ->
   ship = new Ship?(25, 23)
@@ -75,7 +75,7 @@ test 'an instance of Alien have a default number of live equals to 1', ->
 test 'The method isAlive of class Alien return true if alien has more than 0 live ', ->
   alien = new Alien?(4, 6)
   ok alien?.isAlive?, 'There must be a method isAlive on alien'
-  ok alien?.isAlive?.length, 'The method isAlive must not take any parameter'
+  equal alien?.isAlive?.length, 0, 'The method isAlive must not take any parameter'
   equal alien?.isAlive?(), true, 'The method isAlive must return true'
 
 test 'The method isAlive of class Alien return false if alien has 0 live ', ->
@@ -83,7 +83,7 @@ test 'The method isAlive of class Alien return false if alien has 0 live ', ->
   alien?.live = 0
   equal !alien?.isAlive?(), false, 'If live of alien is 0, isAlive must return false'
 
-test 'The method move of class Alien add ten to x if the parameter value is right', ->
+test "The method move of class Alien add ten to x if the parameter value is 'right'", ->
   alien = new Alien?(20, 20)
   ok alien?.move?, 'There must be a method move'
   equal alien?.move?.length, 1, 'The method move must take one parameter'
@@ -91,7 +91,7 @@ test 'The method move of class Alien add ten to x if the parameter value is righ
   equal alien?.x, 30, 'alien.x must be equal to 30'
   equal alien?.y, 20, 'alien.y must be equal to 20'
 
-test 'The method move of class Alien substract ten to x if the parameter value is left', ->
+test "The method move of class Alien substract ten to x if the parameter value is 'left'", ->
   alien = new Alien?(20, 20)
   alien?.move?('left')
   equal alien?.x, 10, 'alien.x must be equal to 10'
@@ -103,7 +103,7 @@ test "The method move of class Alien doesn't do anything if parameter isn't vali
   equal alien?.x, 20, 'alien.x must be equal to 20'
   equal alien?.y, 20, 'alien.y must be equal to 20'
 
-test 'The method move of class Alien add 40 to y if the parameter value is down', ->
+test "The method move of class Alien add 40 to y if the parameter value is 'down'", ->
   alien = new Alien?(20, 20)
   alien?.move?('down')
   equal alien?.x, 20, 'alien.x must be equal to 20'
@@ -130,6 +130,12 @@ test 'There is a class VeryBadAlien which extend Alien and taking 2 attributes x
   equal veryBadAlien?.x, 23, 'veryBadAlien.x must be equal to 23'
   equal veryBadAlien?.y, 45, 'veryBadAlien.y must be equal to 45'
 
+test 'A VeryBadAlien can move like an Alien', ->
+  alien = new VeryBadAlien?(20, 20)
+  alien?.move?('down')
+  equal alien?.x, 20, 'alien.x must be equal to 20'
+  equal alien?.y, 60, 'alien.y must be equal to 60'
+
 test 'A new instance of VeryBadAlien has 2 lives', ->
   veryBadAlien = new VeryBadAlien?(23, 45)
   equal veryBadAlien?.live, 2, 'veryBadAlien.live must be equal to 2'
@@ -146,8 +152,8 @@ test 'A VeryBadAlien has a method mutate which return the current instance of Ve
 
 test 'An alien has a method mutate which return the corresponding VeryBadAlien', ->
   alien = new Alien?(10, 13)
-  ok veryBadAlien?.mutate?, 'There must be a method mutate in class Alien'
-  equal veryBadAlien?.mutate?.length, 0, 'The method mutate must not take any parameter'
+  ok alien?.mutate?, 'There must be a method mutate in class Alien'
+  equal alien?.mutate?.length, 0, 'The method mutate must not take any parameter'
   alienMutated = alien?.mutate?()
   ok VeryBadAlien? && alienMutated instanceof VeryBadAlien
   ok alien? && alienMutated? && alien?.x == alienMutated?.x, 'The x position of original and mutated alien must be the same'
@@ -157,7 +163,7 @@ test 'The VeryBadAlien class has a method to mutates a list of alien', ->
   veryBadAlien = new VeryBadAlien?(54, 78)
   aliens = [new Alien?(10, 13), veryBadAlien, new Alien?(23, 34)]
   ok VeryBadAlien?::mutates?, 'The class VeryBadAlien must have a static method mutates'
-  equal VeryBadAlien?::mutates?.length, 1, 'the method mutates must take 1 parameter'
+  equal VeryBadAlien?::mutates?.length, 1, 'the method mutates must take 1 parameter, the list of aliens'
   mutatedAliens = VeryBadAlien?::mutates?(aliens)
   equal mutatedAliens?.length, 3, 'The list of mutates aliens must contains 3 elements'
   isEveryAlienVeryBad = mutatedAliens?.every (alien) ->
