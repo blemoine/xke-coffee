@@ -28,8 +28,8 @@ test "There is a class Ship with 2 attributes x and y in the constructor, repres
   equal ship.y, 34
 
 test 'There is a class Ship, with 2 properties width and height', ->
-  equal Ship:: width, 40, "Width must be 40"
-  equal Ship:: height, 30, "Height must be 30"
+  equal Ship::width, 40, "Width must be 40"
+  equal Ship::height, 30, "Height must be 30"
 
 test 'The method moveLeft of class Ship substract 10 to the x position of the ship', ->
   ship = new Ship(15, 23)
@@ -48,8 +48,8 @@ test 'There is a class Alien, taking 2 attributes x and y in the constructor,  r
   equal alien.y, 67
 
 test 'There is a class Alien, with 2 properties height and width', ->
-  equal Alien:: width, 30
-  equal Alien:: height, 30
+  equal Alien::width, 30
+  equal Alien::height, 30
 
 test 'an instance of Alien have a default number of live equals to 1', ->
   alien = new Alien(12, 23)
@@ -127,9 +127,10 @@ test 'An alien has a method mutate which return the corresponding VeryBadAlien',
 test 'The VeryBadAlien class has a method to mutates a list of alien', ->
   veryBadAlien = new VeryBadAlien(54, 78)
   aliens= [new Alien(10, 13), veryBadAlien, new Alien(23, 34)]
-  mutatedAliens = VeryBadAlien:: mutates(aliens)
+  mutatedAliens = VeryBadAlien::mutates(aliens)
   equal mutatedAliens.length, 3
-  ok mutatedAliens.every (alien) -> alien instanceof VeryBadAlien
+  ok mutatedAliens.every (alien) ->
+    alien instanceof VeryBadAlien
   equal mutatedAliens[0].x, 10
   equal mutatedAliens[0].y, 13
   equal mutatedAliens[1], veryBadAlien
@@ -175,8 +176,8 @@ test 'There is a class projectile with 2 attributes x and y in the constructor, 
   equal projectile.y, 33
 
 test 'There is a class Projectile, with 2 properties height and width', ->
-  equal Projectile:: width, 5
-  equal Projectile:: height, 10
+  equal Projectile::width, 5
+  equal Projectile::height, 10
 
 test 'The class Ship has a method fire which create a new Projectile, and the coordinates of the projectile are centered on the ship', ->
   ship = new Ship(10, 80)

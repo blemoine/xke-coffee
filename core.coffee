@@ -1,3 +1,4 @@
+##Redefinition des constantes qui ne sont pas présentes dans tous les navigateurs
 DOM_VK_LEFT = 37
 DOM_VK_RIGHT = 39
 DOM_VK_SPACE = 32
@@ -33,7 +34,8 @@ class State
       if @keyBindings[key]
         @keyBindings[key]()
 
-  destroy: -> $(document).off 'keydown'
+  destroy: ->
+    $(document).off 'keydown'
 
   render: (context) ->
     context.fillStyle = "black"
@@ -42,7 +44,9 @@ class State
 class @StartState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[DOM_VK_SPACE] = ->
+      game.changeState new IngameState(game.width, game.height, game.player)
+      false
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -55,7 +59,9 @@ class @StartState extends State
 class LoseState extends State
   constructor: (@width, @height) ->
     keyBindings = {}
-    keyBindings[DOM_VK_SPACE] = -> game.changeState new IngameState(game.width, game.height, game.player)
+    keyBindings[DOM_VK_SPACE] = ->
+      game.changeState new IngameState(game.width, game.height, game.player)
+      false
     super(@width, @height, keyBindings)
 
   render: (context) ->
@@ -93,7 +99,8 @@ class IngameState extends State
         maxValue = @width - @ship.width
         @ship.x = if(newX > maxValue) then maxValue else newX
 
-    keyBindings[DOM_VK_RETURN] = => @ship.destroyAliens(@aliens, 5) if @ship && @aliens
+    keyBindings[DOM_VK_RETURN] = =>
+      @ship.destroyAliens(@aliens, 5) if @ship && @aliens
     keyBindings[DOM_VK_SPACE] = =>
       if @ship && @projectiles.length < 5
         projectile = @ship.fire()
@@ -105,7 +112,7 @@ class IngameState extends State
     super()
     @aliens = []
     @projectiles = []
-    @ship = (new Ship(0, @height - Ship:: height) ) if(Ship?)
+    @ship = (new Ship(0, @height - Ship::height) ) if(Ship?)
 
     @timePassed = 0
     SPAWN_INTERVAL = 40
@@ -129,13 +136,15 @@ class IngameState extends State
           if !hasCollision && projectile.y > 0
             newProjectiles.push projectile
 
-        deadAliens = @aliens.filter (alien) => alien.isAlive? && !alien.isAlive()
+        deadAliens = @aliens.filter (alien) =>
+          alien.isAlive? && !alien.isAlive()
         if(deadAliens.length > 0)
           score = deadAliens.reduce(((acc, alien) ->
             acc + alien.value
           ), 0)
           @player.increaseScore(score)
-          @aliens = @aliens.filter (alien) => alien.isAlive? && alien.isAlive()
+          @aliens = @aliens.filter (alien) =>
+            alien.isAlive? && alien.isAlive()
 
 
         @projectiles = newProjectiles
@@ -152,15 +161,13 @@ class IngameState extends State
             alien.move('down')
             alien.x = if (isXMoreThanMax) then maxXValue else 0
 
-
-
           if alien.y + alien.height > @height
             game.changeState new LoseState(@width, @height)
       if @timePassed % SPAWN_INTERVAL == 0
         @aliens.push new Alien(0, 0) if Alien?
 
       if @timePassed % MUTATE_INTERVAL == 0
-        @aliens = VeryBadAlien:: mutates(@aliens) if VeryBadAlien?
+        @aliens = VeryBadAlien::mutates(@aliens) if VeryBadAlien?
 
       if @ship? && @ship.isAlive? && !@ship.isAlive()
         game.changeState new LoseState(@width, @height)
@@ -195,3 +202,10 @@ class IngameState extends State
     @projectiles.forEach (projectile) ->
       context.drawImage(SPRITES.projectile, projectile.x, projectile.y)
 
+
+setTimeout((->
+  if Player?
+    game.player = new Player 0
+  game.changeState new StartState(game.width, game.height)
+  game.render()
+), 500)
