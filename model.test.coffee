@@ -81,7 +81,7 @@ test 'The method isAlive of class Alien return true if alien has more than 0 liv
 test 'The method isAlive of class Alien return false if alien has 0 live ', ->
   alien = new Alien?(4, 6)
   alien?.live = 0
-  equal !alien?.isAlive?(), false, 'If live of alien is 0, isAlive must return false'
+  equal alien?.isAlive?(), false, 'If live of alien is 0, isAlive must return false'
 
 test "The method move of class Alien add ten to x if the parameter value is 'right'", ->
   alien = new Alien?(20, 20)
@@ -180,7 +180,7 @@ test 'The class Ship must have a method destroyAliens which decrease lives of n 
   ship = new Ship?(10, 20)
   aliens = [new Alien?(1, 1), new VeryBadAlien?(1, 2), new Alien?(1, 3)]
   ok ship?.destroyAliens?, 'ship must have a method destroyAliens'
-  equal ship?.destroyAliens?.length, 2, 'The method destroyAliens must take 2 parameters'
+  equal ship?.destroyAliens?.length, 2, 'The method destroyAliens must take 2 parameters, first the list of aliens, second the number of aliens impacted'
   ship?.destroyAliens?(aliens, 2)
   equal aliens[0]?.live, 0, 'The first alien must have lost 1 life'
   equal aliens[1]?.live, 1, 'The second alien must have lost 1 life'
@@ -229,8 +229,8 @@ test 'The class Ship has a method fire which create a new Projectile, and the co
   equal ship?.fire?.length, 0, 'The method fire must not take any parameter'
   projectile = ship?.fire()
   ok Projectile? && projectile instanceof Projectile
-  equal projectile?.x, 30, 'projectile.x must be equal to 30'
-  equal projectile?.y, 80, 'projectile.y must be equal to 80'
+  equal projectile?.x, 30, 'projectile.x must be equal to ship.x + ship.width / 2'
+  equal projectile?.y, 80, 'projectile.y must be equal to ship.y'
 
 test 'The class Projectile has a method move, which remove 10 to y coordinate', ->
   projectile = new Projectile?(22, 33)
@@ -240,46 +240,46 @@ test 'The class Projectile has a method move, which remove 10 to y coordinate', 
   equal projectile?.y, 23, 'projectile.x must be equal to 23'
   equal projectile?.x, 22, 'projectile.y must be equal to 22'
 
-test 'There must be a method hasCollisionWith in the class projectile, colliding at left', ->
+test 'There must be a method hasCollisionWith in the class Projectile, colliding at left', ->
   projectile = new Projectile?(100, 100)
-  equal !projectile?.hasCollisionWith?(new Alien(69,
+  equal projectile?.hasCollisionWith?(new Alien(69,
     10)), false, 'There must not be any colision with an alien below the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(71,
+  equal projectile?.hasCollisionWith?(new Alien(71,
     10)), false, 'There must not be any colision with an alien below the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(69,
+  equal projectile?.hasCollisionWith?(new Alien(69,
     100)), false, 'There must not be any colision with an alien left of the projectile'
   ok projectile?.hasCollisionWith?(new Alien(71,
     100)), 'There must be a colision with an alien where left of projectile and right of the alien collide'
 
-test 'There must be a method hasCollisionWith in the class projectile, colliding at right', ->
+test 'There must be a method hasCollisionWith in the class Projectile, colliding at right', ->
   projectile = new Projectile?(100, 100)
-  equal !projectile?.hasCollisionWith?(new Alien(106,
+  equal projectile?.hasCollisionWith?(new Alien(106,
     10)), false, 'There must not be any colision with an alien below the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(104,
+  equal projectile?.hasCollisionWith?(new Alien(104,
     10)), false, 'There must not be any colision with an alien below the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(106,
+  equal projectile?.hasCollisionWith?(new Alien(106,
     100)), false, 'There must not be any colision with an alien right of the projectile'
   ok projectile?.hasCollisionWith?(new Alien(104,
     100)), 'There must be a colision with an alien where right of projectile and left of the alien collide'
 
-test 'There must be a method hasCollisionWith in the class projectile, colliding at top', ->
+test 'There must be a method hasCollisionWith in the class Projectile, colliding at top', ->
   projectile = new Projectile?(100, 100)
-  equal !projectile?.hasCollisionWith?(new Alien(2,
+  equal projectile?.hasCollisionWith?(new Alien(2,
     69)), false, 'There must not be any colision with an alien left of the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(2,
+  equal projectile?.hasCollisionWith?(new Alien(2,
     71)), false, 'There must not be any colision with an alien left of the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(100,
+  equal projectile?.hasCollisionWith?(new Alien(100,
     69)), false, 'There must not be any colision with an alien below the projectile'
   ok projectile?.hasCollisionWith?(new Alien(100,
     71)), 'There must be a colision with an alien where bottom of projectile and top of the alien collide'
 
-test 'There must be a method hasCollisionWith in the class projectile, colliding at bottom', ->
+test 'There must be a method hasCollisionWith in the class Projectile, colliding at bottom', ->
   projectile = new Projectile?(100, 100)
-  equal !projectile?.hasCollisionWith?(new Alien(2,
+  equal projectile?.hasCollisionWith?(new Alien(2,
     111)), false, 'There must not be any colision with an alien left of the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(2,
+  equal projectile?.hasCollisionWith?(new Alien(2,
     109)), false, 'There must not be any colision with an alien left of the projectile'
-  equal !projectile?.hasCollisionWith?(new Alien(100,
+  equal projectile?.hasCollisionWith?(new Alien(100,
     111)), false, 'There must not be any colision with an alien over the projectile'
   ok projectile?.hasCollisionWith?(new Alien(100,
     109)), 'There must be a colision with an alien where top of projectile and bottom of the alien collide'

@@ -105,6 +105,7 @@ class IngameState extends State
       if @ship && @projectiles.length < 5
         projectile = @ship.fire()
         @projectiles.push projectile if(projectile)
+      false
     super(@width, @height, keyBindings)
 
 
