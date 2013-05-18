@@ -24,3 +24,7 @@
 #qunit-userAgent {
     display:none;
 }
+
+.test-source {
+    display:none;
+}
